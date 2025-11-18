@@ -1,0 +1,500 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  font-family: "Quicksand", sans-serif; /* Đảm bảo tên font đúng */
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+/* 2. Cấu hình Body */
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: #1a1a1a; /* Màu nền tối dự phòng */
+  /* Không đặt flex ở đây nữa, để .app-container lo */
+}
+
+/* --- QUAN TRỌNG: Class bao quanh ứng dụng để full màn hình --- */
+.app-container {
+  width: 100vw; /* Chiều rộng 100% màn hình */
+  height: 100vh; /* Chiều cao 100% màn hình */
+  position: fixed; /* Cố định vị trí */
+  top: 0;
+  left: 0;
+
+  /* Căn giữa nội dung (Login/Chat) */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* Cấu hình hiển thị ảnh nền */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* Hiệu ứng chuyển cảnh mượt khi đổi theme */
+  transition: background-image 0.5s ease-in-out;
+}
+
+/* 3. Class tạo hiệu ứng Kính (Glassmorphism) */
+.glass-card {
+  box-sizing: border-box;
+  padding: 40px;
+  width: 100%;
+  max-width: 420px;
+  overflow: hidden;
+
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 24px;
+
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 4. Ô nhập liệu kiểu kính */
+.glass-input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 15px 20px;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+.glass-input:focus {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.glass-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* 5. Nút bấm kiểu kính */
+.glass-button {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.4),
+    rgba(255, 255, 255, 0.2)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  padding: 15px;
+  width: 100%;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 10px;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.glass-button:hover {
+  background: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+.switch-text {
+  margin-top: 20px;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  cursor: pointer;
+}
+.switch-text:hover {
+  text-decoration: underline;
+  opacity: 1;
+}
+
+/* 6. Giao diện Chat */
+.chat-container {
+  display: flex;
+  width: 90vw;
+  height: 85vh;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 0 22px 0 rgba(225, 225, 225, 0.05);
+}
+
+.sidebar {
+  width: 300px;
+  background: rgba(255, 255, 255, 0.1);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar h3 {
+  color: white;
+  margin-bottom: 20px;
+}
+
+.chat-window {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.messages-area {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.input-area {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  gap: 10px;
+}
+
+.chat-bubble {
+  padding: 12px 18px;
+  border-radius: 16px;
+  max-width: 70%;
+  color: white;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.chat-bubble.sent {
+  background: rgba(150, 100, 255, 0.4);
+  border-bottom-right-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  /* align-self bỏ đi vì message-row đã lo việc căn chỉnh rồi */
+}
+
+.chat-bubble.received {
+  background: rgba(255, 255, 255, 0.2);
+  border-bottom-left-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* 7. Header và Responsive */
+.chat-header {
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  color: white;
+  gap: 15px;
+  justify-content: flex-start;
+}
+
+.menu-btn,
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: none;
+}
+
+.friend-item {
+  padding: 12px;
+  margin-bottom: 5px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+
+  /* Thêm các dòng này */
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Khoảng cách giữa avatar và tên bạn bè */
+}
+.friend-item:hover,
+.friend-item.active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+  .chat-container {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    border: none;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 80%;
+    height: 100%;
+    z-index: 100;
+    background: rgba(40, 45, 70, 0.95);
+    backdrop-filter: blur(20px);
+    transition: left 0.3s ease;
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  .menu-btn,
+  .close-btn {
+    display: block;
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+  }
+}
+
+/* 8. Thanh cuộn Custom */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* 9. Theme Modal */
+.theme-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.theme-modal {
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  /* Thêm position relative để z-index hoạt động đúng */
+  position: relative;
+}
+
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.theme-option {
+  cursor: pointer;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  transition: 0.3s;
+  position: relative;
+}
+
+.theme-option img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  display: block;
+}
+
+.theme-option span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  font-size: 0.8rem;
+  padding: 5px;
+  text-align: center;
+}
+
+.theme-option:hover {
+  transform: scale(1.05);
+}
+
+.theme-option.active {
+  border-color: #00d2ff;
+  box-shadow: 0 0 15px #00d2ff;
+}
+/* Avatar tròn xoe */
+/* Avatar tròn xoe */
+.avatar {
+  width: 35px; /* Giảm nhẹ kích thước */
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.4); /* Border mờ hơn, tinh tế hơn */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0; /* Quan trọng: Ngăn avatar bị co lại khi không đủ chỗ */
+}
+
+/* Avatar nhỏ hơn cho trong tin nhắn */
+.avatar-small {
+  width: 28px; /* Nhỏ hơn nữa cho chat */
+  height: 28px;
+  /* Border vẫn giữ nguyên từ .avatar */
+}
+
+/* Layout tin nhắn khi có avatar */
+.message-row {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 15px;
+  gap: 10px; /* Thêm khoảng cách 10px giữa avatar và bubble */
+  animation: popIn 0.3s ease-out forwards;
+}
+.message-row.sent {
+  flex-direction: row-reverse;
+  gap: 10px; /* Thêm khoảng cách cho tin nhắn của mình */
+}
+
+.message-row.sent .avatar-small {
+  margin-right: 0;
+  margin-left: 10px;
+}
+/* Định nghĩa chuyển động */
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9); /* Bắt đầu ở dưới thấp và nhỏ */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1); /* Về vị trí chuẩn */
+  }
+}
+/* --- STYLE MỚI CHO MEDIA & EMOJI --- */
+
+/* 1. Khung chứa input để căn chỉnh các nút */
+.input-area {
+  /* Giữ nguyên các thuộc tính cũ */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative; /* Để bảng emoji định vị theo */
+}
+
+/* 2. Nút icon (Ghim, Mặt cười) */
+.icon-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 5px;
+  transition: transform 0.2s;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+.icon-btn:hover {
+  transform: scale(1.2);
+}
+
+/* 3. Hình ảnh trong tin nhắn */
+.message-image {
+  max-width: 100%; /* Không cho ảnh tràn ra ngoài bubble */
+  max-height: 300px;
+  border-radius: 12px;
+  display: block;
+}
+
+/* Nếu bong bóng chứa ảnh thì bỏ padding để ảnh tràn viền cho đẹp */
+.chat-bubble.no-padding {
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.1); /* Nền trong suốt hơn cho ảnh */
+}
+
+/* 4. Bảng Emoji nổi lên */
+.emoji-picker-container {
+  position: absolute;
+  bottom: 80px; /* Nằm trên thanh input */
+  left: 20px;
+  z-index: 100;
+  animation: popIn 0.3s ease-out;
+}
+
+/* 5. Hiệu ứng dấu chấm ... khi đang gõ */
+.typing-indicator {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-left: 60px;
+  margin-bottom: 10px;
+  font-style: italic;
+}
+.dot-1 {
+  animation: blink 1s infinite 0.2s;
+}
+.dot-2 {
+  animation: blink 1s infinite 0.4s;
+}
+.dot-3 {
+  animation: blink 1s infinite 0.6s;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
+
+/* Tên người gửi nhỏ phía trên */
+.message-author {
+  font-size: 0.7rem;
+  position: absolute;
+  top: -18px;
+  left: 50px;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+}
