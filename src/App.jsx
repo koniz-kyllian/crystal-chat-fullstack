@@ -7,7 +7,7 @@ import ChatPage from "./components/ChatPage";
 import io from "socket.io-client";
 
 // Kết nối Socket 1 lần duy nhất ở đây
-const socket = io.connect("http://localhost:3001");
+const socket = io.connect(" https://crystal-chat-api.onrender.com");
 
 const THEMES = [
   {
